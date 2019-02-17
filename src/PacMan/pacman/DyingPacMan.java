@@ -11,77 +11,73 @@ import javafx.util.Duration;
 
 public class DyingPacMan extends Arc {
 
-  private final Timeline timeline;
+    private final Timeline timeline;
 
-  public DyingPacMan(final Maze maze) {
+    public DyingPacMan(final Maze maze) {
 
-    timeline = new Timeline();
-    timeline.setCycleCount(1);
+        timeline = new Timeline();
+        timeline.setCycleCount(1);
 
-    KeyFrame kf1 =
-          new KeyFrame(Duration.millis(600),
-            new EventHandler<ActionEvent>() {
+        KeyFrame kf1 =
+                new KeyFrame(Duration.millis(600),
+                        new EventHandler<ActionEvent>() {
 
-              @Override
-              public void handle(ActionEvent event) {
-                maze.pacMan.setVisible(false);
+                            @Override
+                            public void handle(ActionEvent event) {
+                                maze.pacMan.setVisible(false);
 
-                for (Ghost g : maze.ghosts) {
-                  g.hide();
-                }
+                                for (Ghost g : maze.ghosts) {
+                                    g.hide();
+                                }
 
-                setVisible(true);
-              }
+                                setVisible(true);
+                            }
+                        },
+                        new KeyValue(startAngleProperty(), 90),
+                        new KeyValue(lengthProperty(), 360)
+                );
 
-            },
-            new KeyValue(startAngleProperty(), 90),
-            new KeyValue(lengthProperty(), 360)
-          );
+        KeyFrame kf2 =
+                new KeyFrame(Duration.millis(1800),
+                        new EventHandler<ActionEvent>() {
 
-    KeyFrame kf2 =
-          new KeyFrame(Duration.millis(1800),
-            new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                setVisible(false);
+                                maze.startNewLife();
+                            }
+                        },
+                        new KeyValue(startAngleProperty(), 270),
+                        new KeyValue(lengthProperty(), 0)
+                );
 
-              @Override
-              public void handle(ActionEvent event) {
-                setVisible(false);
-                maze.startNewLife();
-              }
-
-            },
-            new KeyValue(startAngleProperty(), 270),
-            new KeyValue(lengthProperty(), 0)
-          );
-
-
-
-    timeline.getKeyFrames().addAll(kf1, kf2);
-  }
+        timeline.getKeyFrames().addAll(kf1, kf2);
+    }
 
 
-  public void pause() {
-    timeline.pause();
-  }
+    public void pause() {
+        timeline.pause();
+    }
 
-  public void start() {
-    timeline.play();
-  }
+    public void start() {
+        timeline.play();
+    }
 
-  public boolean isRunning() {
-    return timeline.getStatus() == Animation.Status.RUNNING;
-  }
+    public boolean isRunning() {
+        return timeline.getStatus() == Animation.Status.RUNNING;
+    }
 
-  public boolean isPaused() {
-    return timeline.getStatus() == Animation.Status.PAUSED;
-  }
+    public boolean isPaused() {
+        return timeline.getStatus() == Animation.Status.PAUSED;
+    }
 
-  public void startAnimation(int x, int y) {
+    public void startAnimation(int x, int y) {
 
-    setStartAngle(90);
-    setCenterX(x);
-    setCenterY(y);
+        setStartAngle(90);
+        setCenterX(x);
+        setCenterY(y);
 
-    timeline.playFromStart();
-  }
+        timeline.playFromStart();
+    }
 
 }

@@ -15,93 +15,93 @@ import javafx.util.Duration;
 
 public abstract class MovingObject extends Parent {
 
-  protected static final int ANIMATION_STEP = 4;
-  protected static final int MOVE_SPEED = MazeData.GRID_GAP / ANIMATION_STEP;
+    protected static final int ANIMATION_STEP = 4;
+    protected static final int MOVE_SPEED = MazeData.GRID_GAP / ANIMATION_STEP;
 
-  protected static final int MOVING = 1;
-  protected static final int STOPPED = 0;
+    protected static final int MOVING = 1;
+    protected static final int STOPPED = 0;
 
-  protected static final int MOVE_LEFT = 0;
-  protected static final int MOVE_UP = 1;
-  protected static final int MOVE_RIGHT = 2;
-  protected static final int MOVE_DOWN = 3;
+    protected static final int MOVE_LEFT = 0;
+    protected static final int MOVE_UP = 1;
+    protected static final int MOVE_RIGHT = 2;
+    protected static final int MOVE_DOWN = 3;
 
-  protected Maze maze;
-  protected int state;
+    protected Maze maze;
+    protected int state;
 
-  protected IntegerProperty currentImage;
-  protected Image[] images;
-  protected ObjectBinding imageBinding;
-  protected int moveCounter;
+    protected IntegerProperty currentImage;
+    protected Image[] images;
+    protected ObjectBinding imageBinding;
+    protected int moveCounter;
 
-  protected int x;
-  protected int y;
+    protected int x;
+    protected int y;
 
-  public IntegerProperty imageX;
-  public IntegerProperty imageY;
+    public IntegerProperty imageX;
+    public IntegerProperty imageY;
 
-  protected int xDirection;
-  protected int yDirection;
+    protected int xDirection;
+    protected int yDirection;
 
-  protected Timeline timeline;
+    protected Timeline timeline;
 
-  public MovingObject() {
-    currentImage = new SimpleIntegerProperty(0);
+    public MovingObject() {
+        currentImage = new SimpleIntegerProperty(0);
 
-    imageBinding = new ObjectBinding() {
+        imageBinding = new ObjectBinding() {
 
-      {
-        super.bind(currentImage);
-      }
+            {
+                super.bind(currentImage);
+            }
 
-      @Override
-      protected Image computeValue() {
-        return images[currentImage.get()];
-      }
-    };
+            @Override
+            protected Image computeValue() {
+                return images[currentImage.get()];
+            }
+        };
 
-    moveCounter = 0;
-    xDirection = 0;
-    yDirection = 0;
-    timeline = createTimeline();
-  }
+        moveCounter = 0;
+        xDirection = 0;
+        yDirection = 0;
+        timeline = createTimeline();
+    }
 
-  public abstract void moveOneStep();
+    public abstract void moveOneStep();
 
-  private Timeline createTimeline() {
-    timeline = new Timeline();
-    timeline.setCycleCount(Timeline.INDEFINITE);
-    KeyFrame kf = new KeyFrame(Duration.millis(45), new EventHandler<ActionEvent>() {
+    private Timeline createTimeline() {
+        timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        KeyFrame kf = new KeyFrame(Duration.millis(45), new EventHandler<ActionEvent>() {
 
-      @Override
-      public void handle(ActionEvent event) {
-        moveOneStep();
-      }
+            @Override
+            public void handle(ActionEvent event) {
+                moveOneStep();
+            }
 
-    });
-    timeline.getKeyFrames().add(kf);
+        });
+        timeline.getKeyFrames().add(kf);
 
-    return timeline;
-  }
+        return timeline;
+    }
 
-  public void stop() {
-    timeline.stop();
-  }
+    public void stop() {
+        timeline.stop();
+    }
 
-  public void pause() {
-    timeline.pause();
-  }
+    public void pause() {
+        timeline.pause();
+    }
 
-  public void start() {
-    timeline.play();
-  }
+    public void start() {
+        timeline.play();
+    }
 
-  public boolean isRunning() {
-    return timeline.getStatus() == Animation.Status.RUNNING;
-  }
+    public boolean isRunning() {
+        return timeline.getStatus() == Animation.Status.RUNNING;
+    }
 
-  public boolean isPaused() {
-    return timeline.getStatus() == Animation.Status.PAUSED;
-  }
+    public boolean isPaused() {
+        return timeline.getStatus() == Animation.Status.PAUSED;
+    }
 
 }
