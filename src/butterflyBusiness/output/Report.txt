@@ -1,0 +1,4 @@
+The total is 3834.63
+The most profitable month is September with a total of 563.41
+The average amount per month is 319.5525
+The most used issuer is Visa was used 8 times

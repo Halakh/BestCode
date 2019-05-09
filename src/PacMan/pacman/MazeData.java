@@ -94,7 +94,7 @@ public final class MazeData {
         return dotTotal;
     }
 
-    public static void printData() {
+    public static void printData(){
         for (int i = 0; i <= GRID_SIZE_Y; i++) {
             for (int j = 0; j <= GRID_SIZE_X; j++) {
                 System.out.print(MAZE_DATA[j][i] + " ");
